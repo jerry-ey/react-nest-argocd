@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: react-nest-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/jerry-ey/react-nest-argocd
+    targetRevision: HEAD
+    # Path to your Kubernetes manifests in the repo, assuming the manifests for both apps are in a k8s directory
+    path: devops/k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
