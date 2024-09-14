@@ -16,8 +16,15 @@ spec:
       containers:
         - name: nest-backend
           image: jerrywang313/nest-server:v1
-          env:
-            - name: MONGO_URI
-              value: mongodb://mongo:27017/nest
-          ports:
-            - containerPort: 3000
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config # Mount path for CONFIG_PATH
+            - name: secret-volume
+              mountPath: /app/secrets # Mount path for SECRETS_PATH
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app-config # Reference the ConfigMap
+        - name: secret-volume
+          secret:
+            secretName: app-secret

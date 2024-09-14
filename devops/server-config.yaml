@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: argocd
+data:
+  CORS_WHITELIST: http://localhost:8000
+  HOST: localhost
+  PORT: '4000'
