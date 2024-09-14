@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nest-backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nest-backend
@@ -23,27 +23,27 @@ spec:
             - name: SECRETS_PATH
               value: /app/secrets # Path to the secret files
             # Use environment variables from ConfigMap
-            - name: CORS_WHITELIST
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: CORS_WHITELIST
-            - name: HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: HOST
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: PORT
-            # Use environment variables from Secret
-            - name: SECRET_JWT_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: SECRET_JWT_KEY
+            # - name: CORS_WHITELIST
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: CORS_WHITELIST
+            # - name: HOST
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: HOST
+            # - name: PORT
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: PORT
+            # # Use environment variables from Secret
+            # - name: SECRET_JWT_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: app-secret
+            #       key: SECRET_JWT_KEY
           volumeMounts:
             - name: config-volume
               mountPath: /app/config # Mount path for CONFIG_PATH (optional, if files are needed)
