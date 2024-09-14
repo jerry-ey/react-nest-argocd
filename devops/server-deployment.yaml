@@ -1,8 +1,9 @@
-# backend/k8s/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nest-backend
+  labels:
+    app: nest-backend
 spec:
   replicas: 2
   selector:
@@ -16,15 +17,38 @@ spec:
       containers:
         - name: nest-backend
           image: jerrywang313/nest-server:v1
+          env:
+            # Use environment variables from ConfigMap
+            - name: CORS_WHITELIST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: CORS_WHITELIST
+            - name: HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: HOST
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PORT
+            # Use environment variables from Secret
+            - name: SECRET_JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: SECRET_JWT_KEY
           volumeMounts:
             - name: config-volume
-              mountPath: /app/config # Mount path for CONFIG_PATH
+              mountPath: /app/config # Mount path for CONFIG_PATH (optional, if files are needed)
             - name: secret-volume
-              mountPath: /app/secrets # Mount path for SECRETS_PATH
+              mountPath: /app/secrets # Mount path for SECRETS_PATH (optional, if files are needed)
       volumes:
         - name: config-volume
           configMap:
             name: app-config # Reference the ConfigMap
         - name: secret-volume
           secret:
-            secretName: app-secret
+            secretName: app-secret # Reference the Secret
