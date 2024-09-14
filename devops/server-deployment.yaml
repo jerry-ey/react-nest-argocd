@@ -53,6 +53,8 @@ spec:
         - name: config-volume
           configMap:
             name: app-config # Reference the ConfigMap
+            namespace: argocd
         - name: secret-volume
           secret:
             secretName: app-secret # Reference the Secret
+            namespace: argocd
