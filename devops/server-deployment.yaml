@@ -19,9 +19,9 @@ spec:
           image: jerrywang313/nest-server:v1
           env:
             - name: CONFIG_PATH
-              value: /app/config # Path to the config files
+              value: /usr/src/nest-react/config # Path to the config files
             - name: SECRETS_PATH
-              value: /app/secrets # Path to the secret files
+              value: /usr/src/nest-react/secrets # Path to the secret files
             # Use environment variables from ConfigMap
             # - name: CORS_WHITELIST
             #   valueFrom:
@@ -46,9 +46,9 @@ spec:
             #       key: SECRET_JWT_KEY
           volumeMounts:
             - name: config-volume
-              mountPath: /app/config # Mount path for CONFIG_PATH (optional, if files are needed)
+              mountPath: /usr/src/nest-react/config # Mount path for CONFIG_PATH (optional, if files are needed)
             - name: secret-volume
-              mountPath: /app/secrets # Mount path for SECRETS_PATH (optional, if files are needed)
+              mountPath: /usr/src/nest-react/secrets # Mount path for SECRETS_PATH (optional, if files are needed)
       volumes:
         - name: config-volume
           configMap:
