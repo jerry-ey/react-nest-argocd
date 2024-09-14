@@ -18,6 +18,10 @@ spec:
         - name: nest-backend
           image: jerrywang313/nest-server:v1
           env:
+            - name: CONFIG_PATH
+              value: /app/config # Path to the config files
+            - name: SECRETS_PATH
+              value: /app/secrets # Path to the secret files
             # Use environment variables from ConfigMap
             - name: CORS_WHITELIST
               valueFrom:
